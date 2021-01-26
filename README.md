@@ -8,7 +8,7 @@ Doesn't really work at the moment.
 
 The program calculates a linear equation such that *min-temp* corresponds to 0 PWM and *max-temp* to 255 PWM.
 
-It will then calculate the PWM value corresponding to the current temperature and write it to the PWM file of the GPU.
+It will then calculate the PWM value corresponding to the current temperature and writes it to the PWM file of the GPU.
 
 ## How to
 
