@@ -4,11 +4,11 @@ FILE_PWM=$(echo /sys/class/drm/card0/device/hwmon/hwmon?/pwm1)
 FILE_MODE=$(echo /sys/class/drm/card0/device/hwmon/hwmon?/pwm1_enable)
 FILE_TEMP=$(echo /sys/class/drm/card0/device/hwmon/hwmon?/temp2_input)
 
-$REFRESH=3
+REFRESH=3
 
-function set_mode {
+function set_mode() {
     echo "setting fan mode to $1"
-    echo $1 > $FILE_MODE
+    echo $1 >$FILE_MODE
 }
 
 if [ $# -ne 2 ]; then
@@ -27,36 +27,32 @@ B=$((100 * $1 * 255 / ($2 - $1)))
 # result is divided by 100 to compensate for that
 # (A * 85 - B)/100
 
-
 # clamps to 10 or 255 PWM
 # prints temp and pwm for debug ;_;
-function calc_pwm {
+function calc_pwm() {
     TEMP=$(cat $FILE_TEMP)
     TEMP=$((TEMP / 1000))
-    PWM=$(((A * TEMP - B)/100))
-    if [ $PWM -lt 10 ]
-    then
+    PWM=$(((A * TEMP - B) / 100))
+    if [ $PWM -lt 10 ]; then
         PWM=10
-    elif [ $PWM -gt 255 ]
-    then
+    elif [ $PWM -gt 255 ]; then
         PWM=255
     fi
-    echo "$TEMP C : $PWM" 
+    echo "$TEMP C : $PWM"
     set_pwm $PWM
 }
 
 # change pwm value if different from previous value
-function set_pwm {
+function set_pwm() {
     OLD_PWM=$(cat $FILE_PWM)
     echo "old: $OLD_PWM"
-    if [ $1 -ne $OLD_PWM ];
-    then
-        echo $1 > $FILE_PWM
+    if [ $1 -ne $OLD_PWM ]; then
+        echo $1 >$FILE_PWM
     fi
 }
 
 # change back to auto upon exit
-function reset_on_exit {
+function reset_on_exit() {
     echo ""
     echo "Setting mode to auto"
     set_mode 2
