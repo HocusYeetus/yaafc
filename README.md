@@ -1,1 +1,1 @@
-# yaafc
+# Yet another AMD fan controller
