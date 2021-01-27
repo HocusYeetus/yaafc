@@ -1,0 +1,9 @@
+[Unit]
+Description=Yet another AMD fan controller
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/yaafc
+
+[Install]
+WantedBy=multi-user.target
