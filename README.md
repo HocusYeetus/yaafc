@@ -15,5 +15,5 @@ It will then calculate the PWM value corresponding to the current temperature an
 For now, the program needs to be executed this way:
 
 ```
-$ /bin/su -c './yaafc.sh [min-temp] [max-temp]' root
+$ /bin/su -c './yaafc [min-temp] [max-temp]' root
 ```
