@@ -4,17 +4,17 @@ FILE_PWM=$(echo /sys/class/drm/card0/device/hwmon/hwmon?/pwm1)
 FILE_MODE=$(echo /sys/class/drm/card0/device/hwmon/hwmon?/pwm1_enable)
 FILE_TEMP=$(echo /sys/class/drm/card0/device/hwmon/hwmon?/temp2_input)
 
-REFRESH=3
+# install in /usr/bin
+
+if [ $# -ne 3 ]; then
+    echo "needs temp_min, temp_max and delay"
+    exit 1
+fi
 
 function set_mode() {
     echo "setting fan mode to $1"
     echo $1 >$FILE_MODE
 }
-
-if [ $# -ne 2 ]; then
-    echo "needs temp_min and temp_max"
-    exit 1
-fi
 
 set_mode 1
 
@@ -23,6 +23,7 @@ set_mode 1
 # values are multiplied by 100 to keep 2 decimals
 A=$((100 * 255 / ($2 - $1)))
 B=$((100 * $1 * 255 / ($2 - $1)))
+DELAY=$3
 
 # result is divided by 100 to compensate for that
 # (A * 85 - B)/100
@@ -62,7 +63,7 @@ function reset_on_exit() {
 trap "reset_on_exit" SIGINT SIGTERM
 
 while true; do
-    sleep $REFRESH
+    sleep $DELAY
     clear
     calc_pwm
 done

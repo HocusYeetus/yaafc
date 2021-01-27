@@ -3,7 +3,8 @@ Description=Yet another AMD fan controller
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/yaafc
+EnvironmentFile=/etc/yaafc.conf
+ExecStart=/usr/bin/yaafc $MIN $MAX $DELAY
 
 [Install]
 WantedBy=multi-user.target

@@ -17,3 +17,7 @@ For now, the program needs to be executed this way:
 ```
 $ /bin/su -c './yaafc [min-temp] [max-temp]' root
 ```
+
+## Problemes
+
+The PWM value is stuck at 0. When the program is executed for the first time, the fans seem to spin but quickly stop.
